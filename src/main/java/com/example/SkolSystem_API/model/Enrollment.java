@@ -4,16 +4,24 @@ import java.time.LocalDate;
 
 public class Enrollment {
 
-    //private int enrollmentId;
-
+    private int enrollmentId;
     private int studentId;
     private int courseId;
     private LocalDate date;
 
-    public Enrollment(int studentId, int courseId, LocalDate date) {
+    public Enrollment(int enrollmentId, int studentId, int courseId, LocalDate date) {
+        this.enrollmentId = enrollmentId;
         this.studentId = studentId;
         this.courseId = courseId;
         this.date = date;
+    }
+
+    public int getEnrollmentId() {
+        return enrollmentId;
+    }
+
+    public void setEnrollmentId(int enrollmentId) {
+        this.enrollmentId = enrollmentId;
     }
 
     public int getStudentId() {
