@@ -2,9 +2,11 @@ package com.example.SkolSystem_API.controller;
 
 import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.service.StudentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +23,17 @@ public class StudentController {
         this.service = service;
     }
     //Hämta alla studenter eller filtrera med RequestParam
+
     @GetMapping
     public List<Student> getAllStudents(){
         return service.getAllStudents();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable int id){
+        return service.getStudentById(id)
+                .map(p -> ResponseEntity.status(200).body(p))
+                .orElse(ResponseEntity.status(400).build());
     }
 
 

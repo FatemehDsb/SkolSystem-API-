@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class StudentRepository {
@@ -20,5 +21,11 @@ public class StudentRepository {
 
     public List<Student> getAllStudents(){
         return students;
+    }
+
+    public Optional<Student> getStudentById(int id){
+        return students.stream()
+                .filter( p -> p.getId() == id)
+                .findFirst();
     }
 }
