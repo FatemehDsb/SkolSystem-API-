@@ -31,9 +31,8 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable int id){
-        return service.getStudentById(id)
-                .map(p -> ResponseEntity.status(200).body(p))
-                .orElse(ResponseEntity.status(400).build());
+        Student student = service.getStudentById(id);
+        return ResponseEntity.ok(student);
     }
 
 

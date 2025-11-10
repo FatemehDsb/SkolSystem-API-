@@ -1,5 +1,6 @@
 package com.example.SkolSystem_API.service;
 
+import com.example.SkolSystem_API.exception.StudentNotFoundException;
 import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.StudentRepository;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,9 @@ public class StudentService {
         return repository.getAllStudents();
     }
 
-    public Optional<Student> getStudentById(int id){
-        return repository.getStudentById(id);
+    public Student getStudentById(int id){
+        return repository.getStudentById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " not found!"));
     }
 
 }
