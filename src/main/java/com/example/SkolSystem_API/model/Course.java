@@ -38,4 +38,7 @@ public class Course {
     public List<Student> getEnrolledStudents() {
         return enrolledStudents;
     }
+    public void addStudent(Student student) {
+        enrolledStudents.add(student);
+    }
 }
