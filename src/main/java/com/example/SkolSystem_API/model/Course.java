@@ -41,4 +41,15 @@ public class Course {
     public void addStudent(Student student) {
         enrolledStudents.add(student);
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", maxStudents=" + maxStudents +
+                ", enrolledStudents=" + enrolledStudents +
+                '}';
+    }
 }
