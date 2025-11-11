@@ -1,5 +1,6 @@
 package com.example.SkolSystem_API.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -8,11 +9,11 @@ public class StudentDTO {
     @NotEmpty
     private String studentName;
 
-    //ålder : minst ett visst värde
     @Min(10)
     private int age;
 
-    //e-post: rätt format
+    @Email(message = "Please enter valid email address!")
+    @NotEmpty
     private String studentEmail;
 
     public StudentDTO(String studentName, int age, String studentEmail) {
