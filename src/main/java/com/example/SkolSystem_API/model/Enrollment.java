@@ -16,6 +16,12 @@ public class Enrollment {
         this.date = date;
     }
 
+    public Enrollment( int studentId, int courseId, LocalDate date) {
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.date = date;
+    }
+
     public int getEnrollmentId() {
         return enrollmentId;
     }

@@ -1,9 +1,8 @@
 package com.example.SkolSystem_API.controller;
 
-import com.example.SkolSystem_API.model.Student;
+import com.example.SkolSystem_API.dto.StudentDTO;
 import com.example.SkolSystem_API.service.StudentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +24,14 @@ public class StudentController {
     //Hämta alla studenter eller filtrera med RequestParam
 
     @GetMapping
-    public List<Student> getAllStudents(){
+    public List<StudentDTO>getAllStudents(){
         return service.getAllStudents();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable int id){
-        Student student = service.getStudentById(id);
-        return ResponseEntity.ok(student);
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable int id){
+        StudentDTO studentDto = service.getStudentById(id);
+        return ResponseEntity.ok(studentDto);
     }
 
 

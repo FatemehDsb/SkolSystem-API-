@@ -24,7 +24,8 @@ public class StudentRepository {
     }
 
     public Optional<Student> getStudentById(int id){
-        return students.stream()
+        return students
+                .stream()
                 .filter( p -> p.getId() == id)
                 .findFirst();
     }
