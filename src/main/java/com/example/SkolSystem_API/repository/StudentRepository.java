@@ -19,14 +19,25 @@ public class StudentRepository {
         students.add(new Student(5, "Olivia Davis", 19, "olivia.davis@example.com"));
     }
 
-    public List<Student> getAllStudents(){
+    public List<Student> findAll(){
         return students;
     }
 
-    public Optional<Student> getStudentById(int id){
+    public Optional<Student> findById(int id){
         return students
                 .stream()
                 .filter( p -> p.getId() == id)
                 .findFirst();
+    }
+
+    public Student save(Student std){
+        int nextId = students.stream()
+                .mapToInt(s-> s.getId())
+                .max()
+                .orElse(0)+1;
+        std.setId(nextId);
+        students.add(std);
+        return std;
+
     }
 }

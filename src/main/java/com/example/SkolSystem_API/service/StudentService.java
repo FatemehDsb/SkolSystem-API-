@@ -17,8 +17,8 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public List<StudentDTO> getAllStudents(){
-        return repository.getAllStudents()
+    public List<StudentDTO> getAll(){
+        return repository.findAll()
                 .stream()
                 .map(this::toDto)
                 .toList();
@@ -28,10 +28,21 @@ public class StudentService {
         return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
     }
 
-    public StudentDTO getStudentById(int id){
-      Student student =  repository.getStudentById(id)
+    private Student toEntity ( StudentDTO studentdto){
+        return new Student(studentdto.getStudentName(), studentdto.getAge(), studentdto.getStudentEmail());
+    }
+
+    public StudentDTO getById(int id){
+      Student student =  repository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " not found!"));
       return toDto(student);
+    }
+
+    public StudentDTO addStudent(StudentDTO s){
+        //convert to entity to be saved in database
+        Student student = repository.save(toEntity(s));
+        //convert to dto to send back to client
+        return toDto(student);
     }
 
 }
