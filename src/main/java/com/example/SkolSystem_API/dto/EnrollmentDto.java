@@ -1,18 +1,23 @@
 package com.example.SkolSystem_API.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 public class EnrollmentDto {
 
     @NotEmpty
+    @Positive
     private int studentId;
 
     @NotEmpty
+    @Positive
     private int courseId;
 
-    @NotEmpty
+    @NotEmpty(message = "Missing ")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     public EnrollmentDto(int studentId, int courseId, LocalDate date) {
