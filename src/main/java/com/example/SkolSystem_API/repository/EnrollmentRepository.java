@@ -22,6 +22,10 @@ public class EnrollmentRepository {
                 .findFirst();
     }
 
+    public int getLength(){
+        return enrollments.size();
+    }
+
     public List<Enrollment> findAll(){
         return enrollments;
     }

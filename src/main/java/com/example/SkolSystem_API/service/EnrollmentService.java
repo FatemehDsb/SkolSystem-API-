@@ -22,14 +22,20 @@ public class EnrollmentService {
     public boolean registerStudentOnCourse(EnrollmentDTO request){
 
         if (request.getStudentId() <= 0){
+            System.out.println("No student id ");
+
             return false;
         }
 
         if (request.getCourseId() <= 0){
+            System.out.println("no course id " );
+
             return false;
         }
 
         if (request.getDate() == null){
+            System.out.println("no date ");
+
             return false;
         }
 
@@ -43,11 +49,16 @@ public class EnrollmentService {
 //
 //        }
 
+        int numberOfEnrollments = enrollmentRepository.getLength();
 
         Enrollment enrollment = new Enrollment( request.getStudentId(), request.getCourseId(), request.getDate());
-
         enrollmentRepository.save(enrollment);
-        return false;
+
+        if ( (numberOfEnrollments + 1) == enrollmentRepository.getLength()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<Enrollment> getAllStudentsInCourse(){
