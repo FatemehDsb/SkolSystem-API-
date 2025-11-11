@@ -1,6 +1,6 @@
 package com.example.SkolSystem_API.controller;
 
-import com.example.SkolSystem_API.dto.EnrollmentDto;
+import com.example.SkolSystem_API.dto.EnrollmentDTO;
 import com.example.SkolSystem_API.service.EnrollmentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class EnrollmentController {
     }
 
     @GetMapping()
-    public boolean registerStudentOnCourse( @Valid @RequestBody EnrollmentDto request){
+    public boolean registerStudentOnCourse( @Valid @RequestBody EnrollmentDTO request){
         service.registerStudentOnCourse(request);
         return false;
     }
