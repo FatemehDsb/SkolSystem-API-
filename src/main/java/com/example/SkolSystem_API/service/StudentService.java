@@ -1,13 +1,12 @@
 package com.example.SkolSystem_API.service;
 
+import com.example.SkolSystem_API.dto.StudentDTO;
 import com.example.SkolSystem_API.exception.StudentNotFoundException;
 import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.StudentRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -18,13 +17,21 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public List<Student> getAllStudents(){
-        return repository.getAllStudents();
+    public List<StudentDTO> getAllStudents(){
+        return repository.getAllStudents()
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
-    public Student getStudentById(int id){
-        return repository.getStudentById(id)
+    private StudentDTO toDto (Student student){
+        return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
+    }
+
+    public StudentDTO getStudentById(int id){
+      Student student =  repository.getStudentById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " not found!"));
+      return toDto(student);
     }
 
 }
