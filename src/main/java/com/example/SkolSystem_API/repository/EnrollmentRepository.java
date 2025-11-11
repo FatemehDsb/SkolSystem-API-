@@ -28,7 +28,7 @@ public class EnrollmentRepository {
         return enrollments;
     }
 
-    void save(Enrollment enrollment){
+    public void save(Enrollment enrollment){
 
         int newtId = enrollments.stream().mapToInt(Enrollment::getEnrollmentId).max().orElse(0) + 1;
         enrollment.setEnrollmentId(newtId);
