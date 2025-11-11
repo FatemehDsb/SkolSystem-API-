@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class EnrollmentDto {
+public class EnrollmentDTO {
 
     @NotEmpty
     @Positive
@@ -20,7 +20,7 @@ public class EnrollmentDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    public EnrollmentDto(int studentId, int courseId, LocalDate date) {
+    public EnrollmentDTO(int studentId, int courseId, LocalDate date) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.date = date;

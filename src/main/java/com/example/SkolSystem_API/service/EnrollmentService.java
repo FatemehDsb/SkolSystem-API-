@@ -1,14 +1,11 @@
 package com.example.SkolSystem_API.service;
 
-import com.example.SkolSystem_API.dto.EnrollmentDto;
+import com.example.SkolSystem_API.dto.EnrollmentDTO;
 import com.example.SkolSystem_API.model.Enrollment;
-import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.CourseRepository;
 import com.example.SkolSystem_API.repository.EnrollmentRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +19,7 @@ public class EnrollmentService {
         this.courseRepository = courseRepository;
     }
 
-    public boolean registerStudentOnCourse(EnrollmentDto request){
+    public boolean registerStudentOnCourse(EnrollmentDTO request){
 
         if (request.getStudentId() <= 0){
             return false;
