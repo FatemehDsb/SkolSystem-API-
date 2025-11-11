@@ -1,11 +1,13 @@
 package com.example.SkolSystem_API.repository;
 
 import com.example.SkolSystem_API.model.Enrollment;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class EnrollmentRepository {
 
     private List<Enrollment> enrollments = new ArrayList<>();
@@ -28,7 +30,7 @@ public class EnrollmentRepository {
         return enrollments;
     }
 
-    void save(Enrollment enrollment){
+    public void save(Enrollment enrollment){
 
         int newtId = enrollments.stream().mapToInt(Enrollment::getEnrollmentId).max().orElse(0) + 1;
         enrollment.setEnrollmentId(newtId);
