@@ -3,10 +3,8 @@ package com.example.SkolSystem_API.controller;
 import com.example.SkolSystem_API.dto.EnrollmentDTO;
 import com.example.SkolSystem_API.service.EnrollmentService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/enrollments")
@@ -18,9 +16,12 @@ public class EnrollmentController {
         this.service = service;
     }
 
-    @GetMapping()
-    public boolean registerStudentOnCourse( @Valid @RequestBody EnrollmentDTO request){
-        service.registerStudentOnCourse(request);
-        return false;
+    // @Valid
+    @PostMapping()
+    public ResponseEntity<String> registerStudentOnCourse(@RequestBody EnrollmentDTO request){
+
+        boolean result = service.registerStudentOnCourse(request);
+
+        return ResponseEntity.ok(  result ? "Enrollment went fine." : "Enrollment failed.");
     }
 }
