@@ -1,11 +1,30 @@
 package com.example.SkolSystem_API.dto;
 
-/**<h4>Course Data Transfer Object</h4>
- * The Persistence Layer manages database transactions and storage logic. It consists of repository classes using Spring Data JPA, Hibernate or R2DBC for data access. It is responsible for:
- * <li> Mapping Java objects to database records using ORM frameworks.
- * <li> Managing CRUD (Create, Read, Update, Delete) operations.
- * <li> Supporting relational and NoSQL databases.
- */
-public class CourseDTO {
+import jakarta.validation.constraints.*;
 
+import java.util.List;
+
+public class CourseDTO {
+    @NotBlank(message = "A course title must be specified!")
+    private String title;
+
+    @NotBlank(message = "A course must have a teacher!")
+    private String teacher;
+
+    @Min(value = 1, message = "The maximum number of students in a course must be at least one!")
+    private int maxStudents;
+
+    @NotEmpty(message = "A course must have students!")
+    private List<StudentDTO> students;
+
+    public CourseDTO() {
+
+    }
+
+    public CourseDTO(String title, String teacher, int maxStudents,List<StudentDTO> students) {
+        this.title = title;
+        this.teacher = teacher;
+        this.maxStudents = maxStudents;
+        this.students = students;
+    }
 }

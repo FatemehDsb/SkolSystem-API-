@@ -17,6 +17,12 @@ public class Course {
         this.enrolledStudents = enrolledStudents;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTitle() {
         return title;
     }
@@ -40,5 +46,19 @@ public class Course {
     }
     public void addStudent(Student student) {
         enrolledStudents.add(student);
+    }
+    public void removeStudent(Student student) {
+        enrolledStudents.remove(student);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", maxStudents=" + maxStudents +
+                ", enrolledStudents=" + enrolledStudents +
+                '}';
     }
 }
