@@ -17,11 +17,11 @@ public class Enrollment {
     private int courseId;
     private LocalDate date;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Student> students;
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Course> courses;
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Enrollment(int enrollmentId, int studentId, int courseId, LocalDate date) {
         this.enrollmentId = enrollmentId;
