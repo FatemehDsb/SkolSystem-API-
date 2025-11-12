@@ -27,4 +27,29 @@ public class CourseDTO {
         this.maxStudents = maxStudents;
         this.students = students;
     }
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getTeacher() {
+        return teacher;
+    }
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+    public int getMaxStudents() {
+        return maxStudents;
+    }
+    public void setMaxStudents(int maxStudents) {
+        this.maxStudents = maxStudents;
+    }
+    public List<StudentDTO> getStudents() {
+        return students;
+    }
+    public void setStudents(List<StudentDTO> students) {
+        this.students = students;
+    }
 }

@@ -17,6 +17,13 @@ public class Course {
         this.enrolledStudents = enrolledStudents;
     }
 
+    public Course(String title, String teacher, int maxStudents, List<Student> enrolledStudents) {
+        this.title = title;
+        this.teacher = teacher;
+        this.maxStudents = maxStudents;
+        this.enrolledStudents = enrolledStudents;
+    }
+
     public int getId() {
         return id;
     }

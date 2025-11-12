@@ -1,10 +1,13 @@
 package com.example.SkolSystem_API.service;
 
 import com.example.SkolSystem_API.dto.CourseDTO;
+import com.example.SkolSystem_API.dto.StudentDTO;
 import com.example.SkolSystem_API.model.Course;
+import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**<h4>Course Service</h4>
@@ -23,16 +26,50 @@ public class CourseService {
     }
 
     public List<CourseDTO> getAll() {
-/*
-        some_Optional<asfjhdvk> .map() .orElse() .build
-                .of(askjhaslkjdhaslhd)
-*/
         return repository.findAll()
-            .stream().map(this::)
+            .stream()
+            .map(this::toDTO)
+            .toList()
         ;
     }
 
-    public CourseDTO toDTO(Course course) {
-        return new CourseDTO();
+    private CourseDTO toDTO(Course course) {
+        List<StudentDTO> students = new ArrayList<>();
+        for (Student s : course.getEnrolledStudents()) {
+            students.add(
+                new StudentDTO(
+                    s.getName(),
+                    s.getAge(),
+                    s.getEmail()
+                )
+            );
+        }
+
+        return new CourseDTO(
+            course.getTitle(),
+            course.getTeacher(),
+            course.getMaxStudents(),
+            students
+        );
+    }
+
+    private Course toEntity(CourseDTO dto) {
+        List<Student> students = new ArrayList<>();
+        for (StudentDTO d: dto.getStudents()) {
+            students.add(
+                new Student(
+                    d.getStudentName(),
+                    d.getAge(),
+                    d.getStudentEmail()
+                )
+            );
+        }
+
+        return new Course(
+            dto.getTitle(),
+            dto.getTeacher(),
+            dto.getMaxStudents(),
+            students
+        );
     }
 }
