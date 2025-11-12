@@ -1,9 +1,15 @@
 package com.example.SkolSystem_API.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name="enrollments")
 public class Enrollment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int enrollmentId;
     private int studentId;
     private int courseId;
