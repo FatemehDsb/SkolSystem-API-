@@ -1,14 +1,11 @@
 package com.example.SkolSystem_API.service;
 
-import com.example.SkolSystem_API.dto.EnrollmentDto;
+import com.example.SkolSystem_API.dto.EnrollmentDTO;
 import com.example.SkolSystem_API.model.Enrollment;
-import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.CourseRepository;
 import com.example.SkolSystem_API.repository.EnrollmentRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,17 +19,23 @@ public class EnrollmentService {
         this.courseRepository = courseRepository;
     }
 
-    public boolean registerStudentOnCourse(EnrollmentDto request){
+    public boolean registerStudentOnCourse(EnrollmentDTO request){
 
         if (request.getStudentId() <= 0){
+            System.out.println("No student id ");
+
             return false;
         }
 
         if (request.getCourseId() <= 0){
+            System.out.println("no course id " );
+
             return false;
         }
 
         if (request.getDate() == null){
+            System.out.println("no date ");
+
             return false;
         }
 
@@ -46,11 +49,16 @@ public class EnrollmentService {
 //
 //        }
 
+        int numberOfEnrollments = enrollmentRepository.getLength();
 
         Enrollment enrollment = new Enrollment( request.getStudentId(), request.getCourseId(), request.getDate());
-
         enrollmentRepository.save(enrollment);
-        return false;
+
+        if ( (numberOfEnrollments + 1) == enrollmentRepository.getLength()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<Enrollment> getAllStudentsInCourse(){
