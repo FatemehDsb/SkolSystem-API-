@@ -10,25 +10,26 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String title;
     private String teacher;
     private int maxStudents;
-    private List<Student> enrolledStudents;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollments;
 
-    public Course(int id, String title, String teacher, int maxStudents, List<Student> enrolledStudents) {
+    public Course(int id, String title, String teacher, int maxStudents, List<Enrollment> enrollments) {
         this.id = id;
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        this.enrolledStudents = enrolledStudents;
+        this.enrollments = enrollments;
     }
 
-    public Course(String title, String teacher, int maxStudents, List<Student> enrolledStudents) {
+    public Course(String title, String teacher, int maxStudents, List<Enrollment> enrollments) {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        this.enrolledStudents = enrolledStudents;
+        this.enrollments = enrollments;
     }
 
     public int getId() {
@@ -55,14 +56,11 @@ public class Course {
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
     }
-    public List<Student> getEnrolledStudents() {
-        return enrolledStudents;
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
     }
-    public void addStudent(Student student) {
-        enrolledStudents.add(student);
-    }
-    public void removeStudent(Student student) {
-        enrolledStudents.remove(student);
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 
     @Override
@@ -72,7 +70,7 @@ public class Course {
                 ", title='" + title + '\'' +
                 ", teacher='" + teacher + '\'' +
                 ", maxStudents=" + maxStudents +
-                ", enrolledStudents=" + enrolledStudents +
+                ", enrolledStudents=" + enrollments +
                 '}';
     }
 }
