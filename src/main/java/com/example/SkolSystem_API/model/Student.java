@@ -2,6 +2,9 @@ package com.example.SkolSystem_API.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="students")
 public class Student {
@@ -9,9 +12,21 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private int age;
     private String email;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 
     public Student(int id, String name, int age, String email){
         this.id = id;
