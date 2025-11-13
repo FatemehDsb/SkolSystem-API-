@@ -45,7 +45,7 @@ public class EnrollmentService {
 //        if ( courseRepository.){
 //        }
 
-        Enrollment enrollment = new Enrollment( request.getStudentId(), request.getCourseId(), request.getDate());
+        Enrollment enrollment = new Enrollment( request.getStudent(), request.getCourse(), request.getDate());
 
         return Optional.of( toEnrolmentDTO(enrollmentRepository.save(enrollment)));
     }
@@ -58,6 +58,6 @@ public class EnrollmentService {
 
     private EnrollmentDTO toEnrolmentDTO(Enrollment enrollment){
 
-        return new EnrollmentDTO(enrollment.getStudentId(), enrollment.getCourseId(), enrollment.getDate());
+        return new EnrollmentDTO(enrollment.getStudent(), enrollment.getCourse(), enrollment.getDate());
     }
 }
