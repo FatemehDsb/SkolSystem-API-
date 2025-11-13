@@ -1,8 +1,9 @@
 package com.example.SkolSystem_API.dto;
 
+import com.example.SkolSystem_API.model.Course;
 import jakarta.validation.constraints.*;
 
-import java.util.List;
+import java.util.Set;
 
 public class CourseDTO {
     @NotBlank(message = "A course title must be specified!")
@@ -15,13 +16,13 @@ public class CourseDTO {
     private int maxStudents;
 
     @NotEmpty(message = "A course must have students!")
-    private List<StudentDTO> students;
+    private Set<StudentDTO> students;
 
     public CourseDTO() {
 
     }
 
-    public CourseDTO(String title, String teacher, int maxStudents,List<StudentDTO> students) {
+    public CourseDTO(String title, String teacher, int maxStudents,Set<StudentDTO> students) {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
@@ -46,10 +47,20 @@ public class CourseDTO {
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
     }
-    public List<StudentDTO> getStudents() {
+    public Set<StudentDTO> getStudents() {
         return students;
     }
-    public void setStudents(List<StudentDTO> students) {
+    public void setStudents(Set<StudentDTO> students) {
         this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseDTO{" +
+                "title='" + title + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", maxStudents=" + maxStudents +
+                ", students=" + students +
+                '}';
     }
 }

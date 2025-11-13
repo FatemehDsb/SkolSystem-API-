@@ -11,7 +11,7 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int enrollmentId;
+    private Integer enrollmentId;
 
     private int studentId;
     private int courseId;
@@ -52,6 +52,22 @@ public class Enrollment {
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public int getCourseId() {
