@@ -16,12 +16,9 @@ public class EnrollmentController {
         this.service = service;
     }
 
-    // @Valid
     @PostMapping()
-    public ResponseEntity<String> registerStudentOnCourse(@RequestBody EnrollmentDTO request){
+    public ResponseEntity<EnrollmentDTO> registerStudentOnCourse(@Valid @RequestBody EnrollmentDTO request){
 
-        boolean result = service.registerStudentOnCourse(request);
-
-        return ResponseEntity.ok(  result ? "Enrollment went fine." : "Enrollment failed.");
+        return service.registerStudentOnCourse(request).map(e -> ResponseEntity.status(200).body(e)).orElse( ResponseEntity.status(418).build());
     }
 }
