@@ -43,7 +43,7 @@ public class CourseService {
 
         Set<StudentDTO> studentDTOs = new HashSet<>();
         for (Enrollment e : course.getEnrollments()) {
-            if (e.getCourseId() != course.getId()) {
+            if (e.getCourse().getId() != course.getId()) {
                 continue;
             }
             Student s = e.getStudent();

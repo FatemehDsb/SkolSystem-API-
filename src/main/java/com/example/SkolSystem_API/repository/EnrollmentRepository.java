@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment,Long> {
 
-    public int getLength();
+    //public int getLength();
 
 }
