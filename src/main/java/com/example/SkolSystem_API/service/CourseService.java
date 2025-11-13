@@ -43,9 +43,11 @@ public class CourseService {
 
         Set<StudentDTO> studentDTOs = new HashSet<>();
         for (Enrollment e : course.getEnrollments()) {
+/* // I don't think this filtering should be necessary...
             if (e.getCourse().getId() != course.getId()) {
                 continue;
             }
+*/
             Student s = e.getStudent();
             StudentDTO d = new StudentDTO(
                 s.getName(),
