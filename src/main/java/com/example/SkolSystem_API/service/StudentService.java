@@ -29,7 +29,17 @@ public class StudentService {
     }
 
     private Student toEntity ( StudentDTO studentdto){
-        return new Student(studentdto.getStudentName(), studentdto.getAge(), studentdto.getStudentEmail());
+        Student student = new Student();
+        if(studentdto.getStudentName() != null){
+            student.setName(studentdto.getStudentName());
+        }
+        if(studentdto.getAge() != null){
+            student.setAge(studentdto.getAge());
+        }
+        if(studentdto.getStudentEmail() != null){
+            student.setEmail(studentdto.getStudentEmail());
+        }
+        return student;
     }
 
     public StudentDTO getById(int id){
@@ -43,6 +53,12 @@ public class StudentService {
         Student student = repository.save(toEntity(s));
         //convert to dto to send back to client
         return toDto(student);
+    }
+
+    public boolean deleteById(int id){
+        if (!repository.existsById(id)) return false;
+        repository.deleteById(id);
+        return true;
     }
 
 }
