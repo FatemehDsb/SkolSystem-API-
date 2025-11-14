@@ -30,7 +30,6 @@ public class EnrollmentService {
 
     public Optional<EnrollmentResponseDTO> registerStudentOnCourse(EnrollmentRequestDTO request){
 
-        System.out.println("TO HERE");
         if (request.getStudentId() < 1){
             return Optional.empty();
         }

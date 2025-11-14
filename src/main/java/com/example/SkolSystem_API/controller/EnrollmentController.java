@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,7 @@ public class EnrollmentController {
     @PostMapping()
     public ResponseEntity<EnrollmentResponseDTO> registerStudentOnCourse(@Valid @RequestBody EnrollmentRequestDTO request){
 
+        request.setDateEnrolled(LocalDate.now());
         return service.registerStudentOnCourse( request).map(e -> ResponseEntity.status(200).body(e)).orElse( ResponseEntity.status(418).build());
     }
 
