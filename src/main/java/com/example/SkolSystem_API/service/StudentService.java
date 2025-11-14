@@ -20,15 +20,15 @@ public class StudentService {
     public List<StudentDTO> getAll(){
         return repository.findAll()
                 .stream()
-                .map(this::toDto)
+                .map(StudentService::toDto)
                 .toList();
     }
 
-    private StudentDTO toDto (Student student){
+    static StudentDTO toDto (Student student){
         return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
     }
 
-    private Student toEntity ( StudentDTO studentdto){
+    static Student toEntity ( StudentDTO studentdto){
         Student student = new Student();
         if(studentdto.getStudentName() != null){
             student.setName(studentdto.getStudentName());

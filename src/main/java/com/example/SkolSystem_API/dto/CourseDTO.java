@@ -3,6 +3,7 @@ package com.example.SkolSystem_API.dto;
 import com.example.SkolSystem_API.model.Course;
 import jakarta.validation.constraints.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CourseDTO {
@@ -15,18 +16,17 @@ public class CourseDTO {
     @Min(value = 1, message = "The maximum number of students in a course must be at least one!")
     private int maxStudents;
 
-    @NotEmpty(message = "A course must have students!")
     private Set<StudentDTO> students;
 
     public CourseDTO() {
 
     }
 
-    public CourseDTO(String title, String teacher, int maxStudents,Set<StudentDTO> students) {
+    public CourseDTO(String title, String teacher, int maxStudents) {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        this.students = students;
+        this.students = new HashSet<>();
     }
 
     public String getTitle() {
