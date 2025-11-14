@@ -18,7 +18,7 @@ public class Student {
     private String email;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Enrollment> enrollments = new ArrayList<>();
+    private List<Enrollment> enrollments;
 
     public List<Enrollment> getEnrollments() {
         return enrollments;
