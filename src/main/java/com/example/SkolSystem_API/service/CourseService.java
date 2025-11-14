@@ -1,16 +1,14 @@
 package com.example.SkolSystem_API.service;
 
 import com.example.SkolSystem_API.dto.CourseDTO;
-import com.example.SkolSystem_API.dto.StudentDTO;
+import com.example.SkolSystem_API.exception.CourseNotFoundException;
 import com.example.SkolSystem_API.model.Course;
-import com.example.SkolSystem_API.model.Enrollment;
-import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.CourseRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**<h4>Course Service</h4>
  * The Business Layer is responsible for implementing the application's core logic. It consists of service classes that:
@@ -30,48 +28,42 @@ public class CourseService {
     public List<CourseDTO> getAll() {
         return repository.findAll()
             .stream()
-            .map(this::toDTO)
+            .map(CourseService::toDTO)
             .toList()
         ;
     }
 
-    public CourseDTO toDTO(Course course) {
+    public CourseDTO getById(int id) {
+        return repository.findById(id)
+            .map(CourseService::toDTO)
+            .orElseThrow(
+                () -> new CourseNotFoundException("No course found matching id: " + id)
+            )
+        ;
+    }
+
+    static CourseDTO toDTO(Course course) {
         CourseDTO dto =  new CourseDTO();
         dto.setTitle(course.getTitle());
         dto.setTeacher(course.getTeacher());
         dto.setMaxStudents(course.getMaxStudents());
-
-        Set<StudentDTO> studentDTOs = new HashSet<>();
-        for (Enrollment e : course.getEnrollments()) {
-/* // I don't think this filtering should be necessary...
-            if (e.getCourse().getId() != course.getId()) {
-                continue;
-            }
-*/
-            Student s = e.getStudent();
-            StudentDTO d = new StudentDTO(
-                s.getName(),
-                s.getAge(),
-                s.getEmail()
-            );
-            studentDTOs.add(d);
-        }
-        dto.setStudents(studentDTOs);
+        dto.setStudents(
+            course.getEnrollments().stream()
+                .map(e -> StudentService.toDto(e.getStudent()))
+                .collect(Collectors.toSet())
+        );
         return dto;
     }
 
-    public Course toEntity(CourseDTO dto) {
-/* I have no idea how to do this...
-        List<Enrollment> enrollments;
-
+    static Course toEntity(CourseDTO dto) {
         return new Course(
             dto.getTitle(),
             dto.getTeacher(),
-            dto.getMaxStudents(),
-            enrollments
+            dto.getMaxStudents()
         );
-*/
-//        repository.findAll().
-        return new Course("INVALID", "INVALID", 0, null);
+    }
+
+    public void createCourse(@Valid CourseDTO dto) {
+        repository.save(CourseService.toEntity(dto));
     }
 }

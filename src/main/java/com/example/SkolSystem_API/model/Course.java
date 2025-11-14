@@ -2,6 +2,7 @@ package com.example.SkolSystem_API.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,11 +26,15 @@ public class Course {
         this.enrollments = enrollments;
     }
 
-    public Course(String title, String teacher, int maxStudents, List<Enrollment> enrollments) {
+    public Course(String title, String teacher, int maxStudents) {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        this.enrollments = enrollments;
+        this.enrollments = new ArrayList<>();
+    }
+
+    public Course() {
+
     }
 
     public int getId() {
