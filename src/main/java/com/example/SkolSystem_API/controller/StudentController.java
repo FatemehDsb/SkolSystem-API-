@@ -30,12 +30,15 @@ public class StudentController {
         StudentDTO studentDto = service.getById(id);
         return ResponseEntity.ok(studentDto);
     }
-
-
     @PostMapping
     public ResponseEntity<StudentDTO> addStudent(@RequestBody StudentDTO s){
         StudentDTO dto = service.addStudent(s);
         return ResponseEntity.ok(dto);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable int id){
+        boolean removed = service.deleteById(id);
+        return removed ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
 

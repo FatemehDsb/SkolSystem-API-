@@ -18,7 +18,7 @@ public class EnrollmentRepositoryOld {
 
     public Optional<Enrollment> findById(int id){
         return enrollments.stream()
-                .filter(e -> e.getEnrollmentId() == id)
+                .filter(e -> e.getId() == id)
                 .findFirst();
     }
 
@@ -36,13 +36,13 @@ public class EnrollmentRepositoryOld {
 
     public void save(Enrollment enrollment){
 
-        int newtId = enrollments.stream().mapToInt(Enrollment::getEnrollmentId).max().orElse(0) + 1;
-        enrollment.setEnrollmentId(newtId);
+        int newtId = enrollments.stream().mapToInt(Enrollment::getId).max().orElse(0) + 1;
+        enrollment.setId(newtId);
         enrollments.add(enrollment);
     }
 
     public boolean deleteById(int id){
 
-        return enrollments.removeIf(e -> e.getEnrollmentId() == id);
+        return enrollments.removeIf(e -> e.getId() == id);
     }
 }

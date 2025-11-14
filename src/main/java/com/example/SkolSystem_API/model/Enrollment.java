@@ -1,9 +1,7 @@
 package com.example.SkolSystem_API.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name="enrollments")
@@ -11,7 +9,7 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer enrollmentId;
+    private Integer id;
     private LocalDate date;
 
     @ManyToOne
@@ -25,7 +23,7 @@ public class Enrollment {
     public Enrollment(int enrollmentId, Student student, Course course, LocalDate date) {
         this.student = student;
         this.course = course;
-        this.enrollmentId = enrollmentId;
+        this.id = enrollmentId;
         this.date = date;
     }
 
@@ -35,12 +33,12 @@ public class Enrollment {
         this.date = date;
     }
 
-    public int getEnrollmentId() {
-        return enrollmentId;
+    public int getId() {
+        return id;
     }
 
-    public void setEnrollmentId(int enrollmentId) {
-        this.enrollmentId = enrollmentId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Student getStudent() {

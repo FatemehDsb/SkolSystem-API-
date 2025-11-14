@@ -10,7 +10,7 @@ public class StudentDTO {
     private String studentName;
 
     @Min(10)
-    private int age;
+    private Integer age;
 
     @Email(message = "Please enter valid email address!")
     @NotEmpty
@@ -26,7 +26,7 @@ public class StudentDTO {
         return studentName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
