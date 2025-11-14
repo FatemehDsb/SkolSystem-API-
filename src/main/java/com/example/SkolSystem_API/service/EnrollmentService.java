@@ -1,11 +1,17 @@
 package com.example.SkolSystem_API.service;
 
-import com.example.SkolSystem_API.dto.EnrollmentDTO;
+import com.example.SkolSystem_API.dto.EnrollmentRequestDTO;
+import com.example.SkolSystem_API.dto.EnrollmentResponseDTO;
+import com.example.SkolSystem_API.model.Course;
 import com.example.SkolSystem_API.model.Enrollment;
+import com.example.SkolSystem_API.model.Student;
 import com.example.SkolSystem_API.repository.CourseRepository;
 import com.example.SkolSystem_API.repository.EnrollmentRepository;
+import com.example.SkolSystem_API.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,51 +19,79 @@ import java.util.Optional;
 public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
 
-    public EnrollmentService(EnrollmentRepository enrollmentRepository, CourseRepository courseRepository) {
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, StudentRepository studentRepository, CourseRepository courseRepository) {
         this.enrollmentRepository = enrollmentRepository;
+        this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
     }
 
-    public Optional<EnrollmentDTO> registerStudentOnCourse(EnrollmentDTO request){
+    public Optional<EnrollmentResponseDTO> registerStudentOnCourse(EnrollmentRequestDTO request){
 
-//        if (request.getStudentId() <= 0){
-//            System.out.println("No student id ");
-//            return new EnrollmentDTO();
+        System.out.println("TO HERE");
+        if (request.getStudentId() < 1){
+            return Optional.empty();
+        }
+
+        if (request.getCourseId() < 1){
+            return Optional.empty();
+        }
+
+        if (request.getDateEnrolled() == null){
+            return Optional.empty();
+        }
+
+        Student student = studentRepository.getById(request.getStudentId());
+
+        Course course = courseRepository.getById(request.getCourseId());
+
+//        // Validate: Max participants in course
+//        Long studentCount = enrollmentRepository
+//                .findAll()
+//                .stream()
+//                .filter(e -> e.getCourse().getId() == request.getCourse().getId())
+//                .count();
+//
+//        if ( request.getCourse().getMaxStudents() <= studentCount ){
+//            return Optional.empty();
 //        }
 //
-//        if (request.getCourseId() <= 0){
-//            System.out.println("no course id " );
-//            return new EnrollmentDTO();
-//        }
+//        // Validate: block duplicate enrollments
+//        boolean isAllreadyEnrolled = enrollmentRepository.existsById((long) request.getStudent().getId());
 //
-//        if (request.getDate() == null){
-//            System.out.println("no date ");
-//            return EnrollmentDTO();
+//        if ( isAllreadyEnrolled ){
+//            return Optional.empty();
 //        }
 
-        // Validate:  inte överskrida kursens maxgräns.
-//        if ( courseRepository.){
-//        }
+        Enrollment enrollment = toEnrollmentEntity(student, course, request.getDateEnrolled());
+        //enrollmentRepository.save(enrollment);
 
-        // Validate:  inte lägga till samma student flera gånger i samma kurs
-//        if ( courseRepository.){
-//        }
-
-        Enrollment enrollment = new Enrollment( request.getStudent(), request.getCourse(), request.getDate());
-
-        return Optional.of( toEnrolmentDTO(enrollmentRepository.save(enrollment)));
+        return Optional.of(toEnrolmentDTO(enrollmentRepository.save(enrollment)));
     }
 
-    public List<Enrollment> getAllStudentsInCourse(){
+    public List<EnrollmentResponseDTO> getAllStudentsInCourse(int courseId){
 
-        return List.of();
-        //return enrollmentRepository.findAll();
+        List<Enrollment> enrollments = enrollmentRepository.findAll()
+                .stream()
+                .filter(e -> e.getCourse().getId() == courseId)
+                .toList();
+
+        return enrollments.stream().map(this::toEnrolmentDTO).toList();
     }
 
-    private EnrollmentDTO toEnrolmentDTO(Enrollment enrollment){
+    private EnrollmentResponseDTO toEnrolmentDTO(Enrollment enrollment){
 
-        return new EnrollmentDTO(enrollment.getStudent(), enrollment.getCourse(), enrollment.getDate());
+        return new EnrollmentResponseDTO(
+                enrollment.getStudent(),
+                enrollment.getCourse(),
+                enrollment.getDate()
+        );
+    }
+
+    private Enrollment toEnrollmentEntity(Student student, Course course, LocalDate enrolledDate){
+
+        return new Enrollment( student, course, enrolledDate);
     }
 }
